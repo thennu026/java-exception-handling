@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Batch 05 – I/O Basics &amp; Streams in Java</title>
+<meta name="description" content="Understanding how Java handles data through streams, files, and input/output operations.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#home">Java I/O</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#introduction">Introduction</a>
+      <a href="#streams">Streams</a>
+      <a href="#comparison">Byte vs Character</a>
+      <a href="#examples">Examples</a>
+      <a href="#usecases">Use Cases</a>
+      <a href="#conclusion">Conclusion</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <span class="badge">Java • I/O • Streams</span>
+    <p class="batch">BATCH 05</p>
+    <h1>INPUT / OUTPUT BASICS &amp; STREAMS</h1>
+    <p class="hero-topic">Java Programming</p>
+    <p class="hero-sub">Understanding how Java handles data through streams, files, and input/output operations.</p>
+    <a class="btn" href="#introduction">Explore the Topic</a>
+  </div>
+</section>
+
+<section class="section reveal" id="introduction">
+  <div class="container">
+    <h2>Introduction to I/O in Java</h2>
+    <div class="card info-card">
+      <p>Input/Output (I/O) in Java refers to the process of reading data from a source and writing data to a destination.</p>
+      <div class="grid two">
+        <div><h3>Input</h3><p>Data coming into a program, such as text from a file, a keyboard, or a network connection.</p></div>
+        <div><h3>Output</h3><p>Data leaving a program, such as text saved to a file or printed on the console.</p></div>
+      </div>
+      <h3>Why I/O is important</h3>
+      <p>Programs are only useful when they can receive data and keep their results. I/O lets applications load settings, process files, store records and talk to other systems.</p>
+      <h3>How Java uses streams</h3>
+      <p>Java treats data as a stream: a continuous sequence that flows from a source into the program, or from the program to a destination. The classes in the <code>java.io</code> package provide these streams.</p>
+    </div>
+    <div class="flow" aria-label="I/O flow">
+      <div class="node">SOURCE</div><div class="arrow" aria-hidden="true"></div>
+      <div class="node">INPUT STREAM</div><div class="arrow" aria-hidden="true"></div>
+      <div class="node main">JAVA PROGRAM</div><div class="arrow" aria-hidden="true"></div>
+      <div class="node">OUTPUT STREAM</div><div class="arrow" aria-hidden="true"></div>
+      <div class="node">DESTINATION</div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt reveal" id="streams">
+  <div class="container">
+    <h2>Types of Streams</h2>
+    <div class="grid two">
+      <article class="card type-card">
+        <div class="icon" aria-hidden="true">01</div>
+        <h3>Byte Streams</h3>
+        <ul>
+          <li>Work with raw binary data</li>
+          <li>Handle data one byte at a time</li>
+          <li>Useful for images, audio, video and binary files</li>
+          <li>Main classes: <code>InputStream</code> and <code>OutputStream</code></li>
+        </ul>
+      </article>
+      <article class="card type-card">
+        <div class="icon" aria-hidden="true">Aa</div>
+        <h3>Character Streams</h3>
+        <ul>
+          <li>Work with character data</li>
+          <li>Designed for text</li>
+          <li>Handle Unicode characters</li>
+          <li>Main classes: <code>Reader</code> and <code>Writer</code></li>
+        </ul>
+      </article>
+    </div>
+
+    <h2 class="sub">InputStream and OutputStream</h2>
+    <div class="grid two">
+      <article class="card">
+        <h3>InputStream</h3>
+        <ul><li>Reads bytes from a source</li><li>Used for input operations</li><li>Examples: <code>FileInputStream</code>, <code>BufferedInputStream</code></li></ul>
+      </article>
+      <article class="card">
+        <h3>OutputStream</h3>
+        <ul><li>Writes bytes to a destination</li><li>Used for output operations</li><li>Examples: <code>FileOutputStream</code>, <code>BufferedOutputStream</code></li></ul>
+      </article>
+    </div>
+    <div class="vflow" aria-label="Stream flow">
+      <div class="node">DATA SOURCE</div><div class="varrow" aria-hidden="true"></div>
+      <div class="node">InputStream</div><div class="varrow" aria-hidden="true"></div>
+      <div class="node main">Java Program</div><div class="varrow" aria-hidden="true"></div>
+      <div class="node">OutputStream</div><div class="varrow" aria-hidden="true"></div>
+      <div class="node">DATA DESTINATION</div>
+    </div>
+
+    <h2 class="sub" id="byte">Byte Streams</h2>
+    <div class="card">
+      <p>Byte streams read and write data exactly as it is stored, one byte at a time. They do not interpret the data, so they work for any kind of file.</p>
+      <div class="chips"><span>InputStream</span><span>OutputStream</span><span>FileInputStream</span><span>FileOutputStream</span><span>BufferedInputStream</span><span>BufferedOutputStream</span></div>
+      <p><strong>Commonly used for:</strong> images, audio, video, PDF files and other binary data.</p>
+    </div>
+    <div class="code-wrap">
+      <div class="code-head"><span>ByteStreamExample.java</span><button class="copy" type="button">Copy Code</button></div>
+<pre><code>import java.io.*;
+
+public class ByteStreamExample {
+    public static void main(String[] args) throws IOException {
+
+        FileInputStream input = new FileInputStream("input.txt");
+        FileOutputStream output = new FileOutputStream("output.txt");
+
+        int data;
+
+        while ((data = input.read()) != -1) {
+            output.write(data);
+        }
+
+        input.close();
+        output.close();
+
+        System.out.println("File copied successfully.");
+    }
+}</code></pre>
+    </div>
+
+    <h2 class="sub" id="character">Character Streams</h2>
+    <div class="card">
+      <p>Character streams are designed for handling text data and characters. They convert bytes to Unicode characters for you, so text in any language is read correctly.</p>
+      <div class="chips"><span>Reader</span><span>Writer</span><span>FileReader</span><span>FileWriter</span><span>BufferedReader</span><span>BufferedWriter</span></div>
+      <p><strong>Why they help:</strong> they handle character encoding automatically, and buffered versions can read a whole line at a time, which makes text files easier to process.</p>
+    </div>
+    <div class="code-wrap">
+      <div class="code-head"><span>CharacterStreamExample.java</span><button class="copy" type="button">Copy Code</button></div>
+<pre><code>import java.io.*;
+
+public class CharacterStreamExample {
+    public static void main(String[] args) throws IOException {
+
+        FileReader reader = new FileReader("input.txt");
+        FileWriter writer = new FileWriter("output.txt");
+
+        int data;
+
+        while ((data = reader.read()) != -1) {
+            writer.write(data);
+        }
+
+        reader.close();
+        writer.close();
+
+        System.out.println("Text copied successfully.");
+    }
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="comparison">
+  <div class="container">
+    <h2>Byte vs Character Streams</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Feature</th><th>Byte Stream</th><th>Character Stream</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Data handled</th><td data-label="Byte Stream">Raw binary data</td><td data-label="Character Stream">Text and characters</td></tr>
+          <tr><th scope="row">Main classes</th><td data-label="Byte Stream">InputStream / OutputStream</td><td data-label="Character Stream">Reader / Writer</td></tr>
+          <tr><th scope="row">Unit of operation</th><td data-label="Byte Stream">8-bit byte</td><td data-label="Character Stream">16-bit Unicode character</td></tr>
+          <tr><th scope="row">Best suited for</th><td data-label="Byte Stream">Images, audio, video, PDFs</td><td data-label="Character Stream">Text files, logs, configuration</td></tr>
+          <tr><th scope="row">Examples</th><td data-label="Byte Stream">FileInputStream, FileOutputStream</td><td data-label="Character Stream">FileReader, FileWriter, BufferedReader</td></tr>
+          <tr><th scope="row">Unicode/Text support</th><td data-label="Byte Stream">No built-in text handling</td><td data-label="Character Stream">Full Unicode and text support</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section alt reveal" id="examples">
+  <div class="container">
+    <h2>Java Examples</h2>
+
+    <div class="card acc">
+      <button class="acc-btn" type="button" aria-expanded="true">Example 1: Reading data using FileInputStream</button>
+      <div class="acc-body">
+        <p>Reads a file byte by byte and prints each byte as a character.</p>
+        <div class="code-wrap">
+          <div class="code-head"><span>ReadBytes.java</span><button class="copy" type="button">Copy Code</button></div>
+<pre><code>import java.io.*;
+
+public class ReadBytes {
+    public static void main(String[] args) throws IOException {
+        FileInputStream in = new FileInputStream("input.txt");
+        int b;
+        while ((b = in.read()) != -1) {
+            System.out.print((char) b);
+        }
+        in.close();
+    }
+}</code></pre>
+        </div>
+        <p class="expected"><strong>Expected result:</strong> the contents of input.txt are printed on the console.</p>
+      </div>
+    </div>
+
+    <div class="card acc">
+      <button class="acc-btn" type="button" aria-expanded="false">Example 2: Writing data using FileOutputStream</button>
+      <div class="acc-body" hidden>
+        <p>Converts a string into bytes and writes them to a file.</p>
+        <div class="code-wrap">
+          <div class="code-head"><span>WriteBytes.java</span><button class="copy" type="button">Copy Code</button></div>
+<pre><code>import java.io.*;
+
+public class WriteBytes {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream out = new FileOutputStream("data.txt");
+        String text = "Hello, Java I/O!";
+        out.write(text.getBytes());
+        out.close();
+        System.out.println("Data written successfully.");
+    }
+}</code></pre>
+        </div>
+        <p class="expected"><strong>Expected result:</strong> a file named data.txt is created containing "Hello, Java I/O!".</p>
+      </div>
+    </div>
+
+    <div class="card acc">
+      <button class="acc-btn" type="button" aria-expanded="false">Example 3: Reading text using BufferedReader</button>
+      <div class="acc-body" hidden>
+        <p>Reads a text file one line at a time, which is faster and simpler than reading single characters.</p>
+        <div class="code-wrap">
+          <div class="code-head"><span>ReadLines.java</span><button class="copy" type="button">Copy Code</button></div>
+<pre><code>import java.io.*;
+
+public class ReadLines {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+        br.close();
+    }
+}</code></pre>
+        </div>
+        <p class="expected"><strong>Expected result:</strong> every line of input.txt is printed on its own line.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="output">
+  <div class="container">
+    <h2>Output</h2>
+    <div class="grid two">
+      <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>ByteStreamExample</span></div><pre>$ java ByteStreamExample
+File copied successfully.</pre></div>
+      <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>CharacterStreamExample</span></div><pre>$ java CharacterStreamExample
+Text copied successfully.</pre></div>
+    </div>
+    <p class="note">The actual output depends on the input file and on how the program runs. If input.txt is missing, Java throws a FileNotFoundException instead.</p>
+  </div>
+</section>
+
+<section class="section alt reveal" id="usecases">
+  <div class="container">
+    <h2>Real-World Use Cases</h2>
+    <div class="grid three">
+      <article class="card uc"><h3>Reading configuration files</h3><p>Applications load settings such as database addresses or preferences from files when they start.</p></article>
+      <article class="card uc"><h3>Processing text files</h3><p>Programs search, count or transform the text in documents, CSV files and reports.</p></article>
+      <article class="card uc"><h3>Copying images and documents</h3><p>Byte streams copy files exactly, so pictures and PDFs stay intact.</p></article>
+      <article class="card uc"><h3>Handling uploaded files</h3><p>Web applications read uploaded data as a stream and save it to storage.</p></article>
+      <article class="card uc"><h3>Reading logs</h3><p>Tools read log files line by line to find errors and monitor activity.</p></article>
+      <article class="card uc"><h3>Data processing</h3><p>Large datasets are read in pieces through streams, so they do not need to fit in memory.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="conclusion">
+  <div class="container">
+    <h2>Conclusion</h2>
+    <div class="card">
+      <p>Java I/O streams give programs a structured way to read and write data. Byte streams handle raw binary data such as images and audio, while character streams handle text and Unicode. Understanding both helps developers choose the right approach for the type of data they work with.</p>
+    </div>
+    <div class="highlight">Choose the right stream based on the type of data you need to handle.</div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">Batch 05 • Input/Output Basics &amp; Streams in Java</footer>
+<button class="to-top" id="toTop" aria-label="Scroll to top" type="button">&#8593;</button>
+
+<script src="script.js"></script>
+</body>
+</html>
